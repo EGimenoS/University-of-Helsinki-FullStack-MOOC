@@ -1,0 +1,10 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dXNlci0-YnJvd3NlcjogdHlwZXMgdGhlIG5vdGUgdGV4dCBpbgAMBWlucHV0IG9mABkFZm9ybQoALQ9zdWJtaXQAOAYAGwUATwctPnNlcnZlcjogaHR0cCBQT1NUIHRvAAgFczovL2Z1bGxzdGFjay1leGFtcGxlYXBwLmhlcm9rdWFwcC5jb20vbmV3X25vdGUKAEMGAIElC1Jlc3BvbnNlIGNvZGU6IDMwMiAoZm91bmQpIExvY2F0aW9uOiAvbm90ZXMKAIFNBW92ZXIgAIFmCQpUaGUgcGFnZSBtYWtlcyBhIEdFVCByZXF1ZXN0IHRvADQHIAphcyBpbnN0cnVjdGVkIGJ5AIIeBQCBUQYgcgB9BywKcmVwZWF0aW5nAII9BXByb2Nlc3Mgc2hvd24Agj4IY291cnNlcyAAgWUHLgoK&s=qsd
+
+user->browser: types the note text in the input of the form
+user->browser: submits the form
+browser->server: http POST to https://fullstack-exampleapp.herokuapp.com/new_note
+server->browser: Response code: 302 (found) Location: /notes
+note over browser: 
+The page makes a GET request to /notes 
+as instructed by the server response,
+repeating the process shown in the courses example.
