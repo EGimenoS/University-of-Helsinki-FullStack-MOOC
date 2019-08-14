@@ -1,0 +1,24 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=YnJvd3Nlci0-c2VydmVyOiBHRVQgZnVsbHN0YWNrLWV4YW1wbGVhcHAuaGVyb2t1YXBwLmNvbS9zcGEKAC0GLS0-AD4HOiBIVE1MLWNvZGUKAEMVaHR0cHM6Ly8APSNtYWluLmNzcwBSE0NTUwAeRnNwYS5qAE4USmF2YXNjcmlwdCAAgUgFbm90ZSBvdmVyIACCKAcAgVcIIGV4ZWN1dGVzIAp0aGUgAC0HaW4gAFUGLgplbmQgbm90AC8UQXMgcmVzdWx0IG9mIAA0CgppdCBtYWtlcyBhAIMHBXJlcXVlc3QgdG8gCi9kYXRhLmpzb24iIHRvIGZldGNoADYFABMFAGMKAII9QABeCQCDUBNyZXNwb25zZSB3aXRoAHMGACUFAIISElRoZSBKU09OAIEZBSBnZXRzIHBhcnNlZCBhbmQgCnJlZHJhd05vdGVzKCkgZnVuY3Rpb24gaGFuZGwAgkkIRE9NICB1cGRhdGluZwCCQwo&s=qsd
+
+browser->server: GET fullstack-exampleapp.herokuapp.com/spa
+server-->browser: HTML-code
+browser->server: GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: CSS-code
+browser->server: GET https://fullstack-exampleapp.herokuapp.com/spa.js
+server-->browser: Javascript code
+note over browser
+browser executes 
+the script in spa.js.
+end note
+note over browser
+As result of the script
+it makes a GET request to 
+/data.json" to fetch the data.
+end note
+browser->server: GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: response with data.json
+note over browser
+The JSON data gets parsed and 
+redrawNotes() function handles 
+the DOM  updating
+end note
