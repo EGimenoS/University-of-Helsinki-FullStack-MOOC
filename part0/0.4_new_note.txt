@@ -1,10 +1,15 @@
-https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dXNlci0-YnJvd3NlcjogdHlwZXMgdGhlIG5vdGUgdGV4dCBpbgAMBWlucHV0IG9mABkFZm9ybQoALQ9zdWJtaXQAOAYAGwUATwctPnNlcnZlcjogaHR0cCBQT1NUIHRvAAgFczovL2Z1bGxzdGFjay1leGFtcGxlYXBwLmhlcm9rdWFwcC5jb20vbmV3X25vdGUKAEMGAIElC1Jlc3BvbnNlIGNvZGU6IDMwMiAoZm91bmQpIExvY2F0aW9uOiAvbm90ZXMKAIFNBW92ZXIgAIFmCQpUaGUgcGFnZSBtYWtlcyBhIEdFVCByZXF1ZXN0IHRvADQHIAphcyBpbnN0cnVjdGVkIGJ5AIIeBQCBUQYgcgB9BywKcmVwZWF0aW5nAII9BXByb2Nlc3Mgc2hvd24Agj4IY291cnNlcyAAgWUHLgoK&s=qsd
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dXNlci0-YnJvd3NlcjogdHlwZXMgdGhlIG5vdGUgdGV4dCBpbgAMBWlucHV0IG9mABkFZm9ybQoALQ9zdWJtaXQAOAYAGwUAPgVvdmVyIABYCAoAQwZmbwBkBWQgYnkAZwV1c2VyIGFsb25nIHdpdGgAewVjdXJyZW50IGRhdGUgYW5kIHRpbWUKaQCBFwZwYXlsb2FkIHNlbgCBFwluZXh0IHJlcXVlc3QKZW5kAIE9BQoAgVMHLT5zZXJ2ZXI6IGh0dHAgUE9TVCB0bwAIBXM6Ly9mdWxsc3RhY2stZXhhbXBsZWFwcC5oZXJva3VhcHAuY29tL25ld18ATQUAQwYAgikLUmVzcG9uc2UgY29kZTogMzAyIChmb3VuZCkgTG9jYXRpb246IC9ub3RlcwCCABMgClQAgUwFZ2UgbWFrZXMgYSBHRVQAgUEIIHRvADQHIAphcyBpbnN0cnVjdACCMQoAgVEGIHIAfQcsCnJlcGVhdGluZwCCIwZyb2Nlc3Mgc2hvd24Ag0IIY291cnNlcyAAgWUHLgCCJAoK&s=qsd
 
 user->browser: types the note text in the input of the form
 user->browser: submits the form
+note over browser:
+the info typed by the user along with the current date and time
+is the payload sent in the next request
+end note
 browser->server: http POST to https://fullstack-exampleapp.herokuapp.com/new_note
 server->browser: Response code: 302 (found) Location: /notes
 note over browser: 
 The page makes a GET request to /notes 
 as instructed by the server response,
 repeating the process shown in the courses example.
+end note
