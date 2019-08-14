@@ -1,0 +1,27 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dXNlci0-YnJvd3NlcjogdHlwZXMgdGhlIG5vdGUgdGV4dCBpbgAMBWlucHV0IG9mABkFZm9ybQoALQ9zdWJtaXQAOAYAGwUAPgVvdmVyIHVzZXI6CgBABmZvAGEFZCBieQBkBXVzZXIgCmFsb25nIHdpdGgAeQVjdXJyZW50IGRhdGUgYW5kIHRpbWUKaQCBFQZwYXlsb2FkIHNlbgCBFQluZXh0IHJlcXVlc3QKZW5kAIE7BQB3CwCBWggKVGhlIGV2ZW50IGxpc3RlbmVyIG9uIACBFwVidXR0b24gdHJpZ2dlcgCCAQZoYW5kbGVyADYdAIImCWlzIHB1c2hlZCB0bwCCPAlzIGFycmF5AHobADgJcyBhcmUgcmVkcmF3biBhY2NvcmRpbmcKAEcHABMGTm90ZXMoKSBmdW5jdGlvbgA9HGFuIEFKQVggUE9TVACCFgggaXMKAII1BQCBHQdzZXJ2ZXIgaW4gb3JkZXIgCnRvIHBlcnNpc3QAglMHdwCECAUuAIJNCgCEKActPgA2BjoAWgZodHRwczovL2Z1bGxzdGFjay1leGFtcGxlYXBwLmhlcm9rdWFwcC5jb20vbmV3X25vdGVfc3BhCgB7Bi0AhHsLeyJtZXNzYWdlIjoiAIUDBWNyZWF0ZWQifQo&s=qsd
+
+user->browser: types the note text in the input of the form
+user->browser: submits the form
+note over user:
+the info typed by the user 
+along with the current date and time
+is the payload sent in the next request
+end note
+note over browser:
+The event listener on 
+the button triggers the handler
+end note
+note over browser:
+the note is pushed to the notes array
+end note
+note over browser
+the notes are redrawn according
+to the redrawNotes() function
+end note
+note over browser
+an AJAX POST request is
+sent to the server in order 
+to persist the new note.
+end note
+browser->server: POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server-->browser: {"message":"note created"}
