@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 const Statistics = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad
+  const average = ((good - bad)/total) || 0
+  const positivePercent = ((good/total)*100) || 0
 	return (
 		<>
 			<p>
@@ -12,6 +15,15 @@ const Statistics = ({ good, neutral, bad }) => {
 			</p>
 			<p>
 				Bad <span>{bad}</span>
+			</p>
+      <p>
+				all <span>{total}</span>
+			</p>
+      <p>
+				average <span>{average}</span>
+			</p>
+      <p>
+				Positive % <span>{positivePercent} %</span>
 			</p>
 		</>
 	);
