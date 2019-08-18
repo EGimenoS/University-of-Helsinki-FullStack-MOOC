@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Person from "./components/Person";
+import Persons from "./components/Persons";
+import Search from "./components/Search";
+import PersonForm from "./components/PersonForm";
 
 const App = () => {
 	const [persons, setPersons] = useState([
@@ -29,8 +31,8 @@ const App = () => {
 			number: newNumber
 		};
 		setPersons(persons.concat(newContact));
-    setNewName("");
-    setNewNumber("");
+		setNewName("");
+		setNewNumber("");
 	};
 
 	const handleChangeName = event => {
@@ -49,28 +51,18 @@ const App = () => {
 		<div>
 			<h2>Phonebook</h2>
 			<div>
-				Filter by name:{" "}
-				<input value={showNames} onChange={handleSearch} type="text" />
+				<Search handleSearch={handleSearch} showNames={showNames} />
 			</div>
 			<h3>Add a new Contact</h3>
-			<form onSubmit={addContact}>
-				<div>
-					name: <input value={newName} onChange={handleChangeName} />
-				</div>
-				<div>
-					number: <input value={newNumber} onChange={handleChangeNumber} />
-				</div>
-				<div>
-					<button type="submit">add</button>
-				</div>
-			</form>
+			<PersonForm
+				addContact={addContact}
+				handleChangeName={handleChangeName}
+				handleChangeNumber={handleChangeNumber}
+				newName={newName}
+				newNumber={newNumber}
+			/>
 			<h2>Numbers</h2>
-      {persons
-        .map(person => Object.assign(person, {nameToSearch: person.name.toLowerCase()}) ) //object spread operator throwing an error? {...person, nameToSearch...
-				.filter(person => person.nameToSearch.includes(showNames.toLowerCase()))
-				.map(person => {
-					return <Person key={person.name} person={person} />;
-				})}
+			<Persons persons={persons} showNames={showNames} />
 		</div>
 	);
 };
