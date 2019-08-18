@@ -4,9 +4,19 @@ import Person from './components/Person'
 const App = () => {
 	const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   const [newName, setNewName] = useState("");
+
+  const isDuplicated = (name) => {
+    return persons.some(person => person.name === name)
+  }
   
   const addContact = (event) => {
     event.preventDefault()
+
+    if (isDuplicated(newName)) {
+      alert(`${newName} is already in the Phonebook`)
+      return
+    }
+    
     const newContact = {
       name: newName
     }
