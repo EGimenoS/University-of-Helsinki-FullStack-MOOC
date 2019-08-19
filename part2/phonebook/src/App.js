@@ -3,31 +3,34 @@ import Persons from "./components/Persons";
 import Search from "./components/Search";
 import PersonForm from "./components/PersonForm";
 import contactsService from "./services/contacts";
-
+import Notification from "./components/Notification";
 
 const App = () => {
 	const [persons, setPersons] = useState([]);
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 	const [showNames, setShowNames] = useState("");
+	const [successMessage, setSuccessMessage] = useState(null);
 
 	useEffect(() => {
-		contactsService.getAll().then(initialContacts => setPersons(initialContacts));
+		contactsService
+			.getAll()
+			.then(initialContacts => setPersons(initialContacts));
 	}, []);
 
 	const isDuplicated = name => {
 		return persons.some(person => person.name === name);
 	};
 
-	const removeContact = (personToRemove) => {
+	const removeContact = personToRemove => {
 		if (!window.confirm(`Delete ${personToRemove.name}?`)) {
-			return
+			return;
 		}
-		contactsService.removeContact(personToRemove.id).then((data) => {
-			console.log(data)
-			setPersons(persons.filter(person => person.id !== personToRemove.id))
-		})
-	}
+		contactsService.removeContact(personToRemove.id).then(data => {
+			console.log(data);
+			setPersons(persons.filter(person => person.id !== personToRemove.id));
+		});
+	};
 
 	const addContact = event => {
 		event.preventDefault();
@@ -42,10 +45,14 @@ const App = () => {
 			number: newNumber
 		};
 
-		contactsService.create(newContact).then((returnedContact) => {
+		contactsService.create(newContact).then(returnedContact => {
 			setPersons(persons.concat(returnedContact));
 			setNewName("");
 			setNewNumber("");
+			setSuccessMessage(`added ${returnedContact.name}`);
+			setTimeout(() => {
+				setSuccessMessage(null);
+			}, 5000);
 		});
 	};
 
@@ -63,6 +70,7 @@ const App = () => {
 
 	return (
 		<div>
+			<Notification message={successMessage} />
 			<h2>Phonebook</h2>
 			<div>
 				<Search handleSearch={handleSearch} showNames={showNames} />
@@ -76,7 +84,11 @@ const App = () => {
 				newNumber={newNumber}
 			/>
 			<h2>Numbers</h2>
-			<Persons persons={persons} showNames={showNames} removeContact={removeContact} />
+			<Persons
+				persons={persons}
+				showNames={showNames}
+				removeContact={removeContact}
+			/>
 		</div>
 	);
 };
