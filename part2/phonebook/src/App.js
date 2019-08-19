@@ -10,7 +10,7 @@ const App = () => {
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 	const [showNames, setShowNames] = useState("");
-	const [successMessage, setSuccessMessage] = useState(null);
+	const [notificationMessage, setNotificationMessage] = useState(null);
 
 	useEffect(() => {
 		contactsService
@@ -29,6 +29,14 @@ const App = () => {
 		contactsService.removeContact(personToRemove.id).then(data => {
 			console.log(data);
 			setPersons(persons.filter(person => person.id !== personToRemove.id));
+		})
+		.catch(error => {
+			const message = `${personToRemove.name} has been previously removed!`
+			setNotificationMessage({message: message, type: 'error'});
+			setTimeout(() => {
+				setNotificationMessage(null);
+			}, 5000);
+			setPersons(persons.filter(person => person.id !== personToRemove.id))
 		});
 	};
 
@@ -49,9 +57,10 @@ const App = () => {
 			setPersons(persons.concat(returnedContact));
 			setNewName("");
 			setNewNumber("");
-			setSuccessMessage(`added ${returnedContact.name}`);
+			const message = `added ${returnedContact.name}`
+			setNotificationMessage({message: message, type: 'success'});
 			setTimeout(() => {
-				setSuccessMessage(null);
+				setNotificationMessage(null);
 			}, 5000);
 		});
 	};
@@ -70,7 +79,7 @@ const App = () => {
 
 	return (
 		<div>
-			<Notification message={successMessage} />
+			<Notification message={notificationMessage} />
 			<h2>Phonebook</h2>
 			<div>
 				<Search handleSearch={handleSearch} showNames={showNames} />
