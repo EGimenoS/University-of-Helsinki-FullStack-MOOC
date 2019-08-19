@@ -29,6 +29,31 @@
       "name": "David Heinemeier Hansson",
       "number": "15-876544",
       "id": 7
+    },
+    {
+      "name": "Evan Yu",
+      "number": "87-986666",
+      "id": 8
+    },
+    {
+      "name": "Michael Jordan",
+      "number": "56-98766666",
+      "id": 9
+    },
+    {
+      "name": "Kurt Cobain",
+      "number": "12-876655",
+      "id": 10
+    },
+    {
+      "name": "David Fincher",
+      "number": "23-2444444",
+      "id": 11
+    },
+    {
+      "name": "Tony Soprano",
+      "number": "13-7655",
+      "id": 12
     }
   ]
 }

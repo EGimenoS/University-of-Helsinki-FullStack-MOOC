@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Search from "./components/Search";
 import PersonForm from "./components/PersonForm";
-import axios from "axios";
+import contactsService from "./services/contacts";
 
 const App = () => {
 	const [persons, setPersons] = useState([]);
@@ -11,9 +11,7 @@ const App = () => {
 	const [showNames, setShowNames] = useState("");
 
 	useEffect(() => {
-		axios
-			.get("http://localhost:3001/persons")
-			.then(response => setPersons(response.data));
+		contactsService.getAll().then(initialContacts => setPersons(initialContacts));
 	}, []);
 
 	const isDuplicated = name => {
@@ -33,8 +31,8 @@ const App = () => {
 			number: newNumber
 		};
 
-		axios.post("http://localhost:3001/persons", newContact).then(response => {
-			setPersons(persons.concat(newContact));
+		contactsService.create(newContact).then((returnedContact) => {
+			setPersons(persons.concat(returnedContact));
 			setNewName("");
 			setNewNumber("");
 		});
