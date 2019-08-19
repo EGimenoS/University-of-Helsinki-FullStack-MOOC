@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import PersonForm from "./components/PersonForm";
 import contactsService from "./services/contacts";
 
+
 const App = () => {
 	const [persons, setPersons] = useState([]);
 	const [newName, setNewName] = useState("");
@@ -17,6 +18,16 @@ const App = () => {
 	const isDuplicated = name => {
 		return persons.some(person => person.name === name);
 	};
+
+	const removeContact = (personToRemove) => {
+		if (!window.confirm(`Delete ${personToRemove.name}?`)) {
+			return
+		}
+		contactsService.removeContact(personToRemove.id).then((data) => {
+			console.log(data)
+			setPersons(persons.filter(person => person.id !== personToRemove.id))
+		})
+	}
 
 	const addContact = event => {
 		event.preventDefault();
@@ -65,7 +76,7 @@ const App = () => {
 				newNumber={newNumber}
 			/>
 			<h2>Numbers</h2>
-			<Persons persons={persons} showNames={showNames} />
+			<Persons persons={persons} showNames={showNames} removeContact={removeContact} />
 		</div>
 	);
 };
