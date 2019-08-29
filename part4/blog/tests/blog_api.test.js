@@ -81,14 +81,14 @@ describe("new Blogs can be added correctly", () => {
 
 describe('deletion of a note', () => {
   test('succeeds with status code 204 if id is valid', async () => {
-    const blogsAtStart = await api.get('/api/blogs')
-    const blogToDelete = blogsAtStart[0]
+    const responseBefore = await api.get('/api/blogs')
+    const blogToDelete = responseBefore.body[0]
+    console.log('blog', blogToDelete)
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
 
-    await api.delete(`api/blog/${blogToDelete.id}`).expect(204)
-
-    const blogsAtEnd = await api.get("/api/blogs");
-    expect(blogsAtEnd.length).toBe(initialBlogs.length - 1)
-    const titles = blogsAtEnd.map(blog => blog.title)
+    const responseAfter = await api.get("/api/blogs");
+    expect(responseAfter.body.length).toBe(initialBlogs.length - 1)
+    const titles = responseAfter.body.map(blog => blog.title);
     expect(titles).not.toContain(blogToDelete.title)
   })
 })
