@@ -79,6 +79,22 @@ describe("new Blogs can be added correctly", () => {
   })
 });
 
+describe('deletion of a note', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsAtStart = await api.get('/api/blogs')
+    const blogToDelete = blogsAtStart[0]
+
+    await api.delete(`api/blog/${blogToDelete.id}`).expect(204)
+
+    const blogsAtEnd = await api.get("/api/blogs");
+    expect(blogsAtEnd.length).toBe(initialBlogs.length - 1)
+    const titles = blogsAtEnd.map(blog => blog.title)
+    expect(titles).not.toContain(blogToDelete.title)
+  })
+})
+
+
+
 afterAll(() => {
   mongoose.connection.close();
 });
