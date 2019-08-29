@@ -41,6 +41,11 @@ describe("new Blogs can be added correctly", () => {
     url: "blog.angularuniversity.io",
     likes: 0
   };
+  const newBlogWithNoLikes = {
+    title: "Angular University",
+    author: "Vasco",
+    url: "blog.angularuniversity.io"
+  };
   test("when addding a blog, the blog count increases", async () => {
     await api.post("/api/blogs").send(newBlog);
 
@@ -53,6 +58,17 @@ describe("new Blogs can be added correctly", () => {
     const response = await api.get("/api/blogs");
     const titles = response.body.map(blog => blog.title);
     expect(titles).toContain(newBlog.title);
+  });
+  test("if the likes property is missing, it defaults to 0", async () => {
+    await api.post("/api/blogs").send(newBlogWithNoLikes);
+    const response = await api.get("/api/blogs");
+
+    const blogToCheck = response.body.find(
+      blog => blog.title === "Angular University"
+    );
+
+    expect(blogToCheck.likes).toBeDefined();
+    expect(blogToCheck.likes).toBe(0);
   });
 });
 
