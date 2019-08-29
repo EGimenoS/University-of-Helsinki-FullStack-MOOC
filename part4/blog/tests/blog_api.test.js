@@ -45,11 +45,11 @@ describe("new Blogs can be added correctly", () => {
     author: "Vasco",
     url: "blog.angularuniversity.io"
   };
-   const newBlogWithNoTitle = {
-     title: "",
-     author: "Vasco",
-     url: "blog.angularuniversity.io"
-   };
+  const newBlogWithNoTitle = {
+    title: "",
+    author: "Vasco",
+    url: "blog.angularuniversity.io"
+  };
   test("when addding a blog, the blog count increases", async () => {
     await api.post("/api/blogs").send(newBlog);
 
@@ -74,26 +74,42 @@ describe("new Blogs can be added correctly", () => {
     expect(blogToCheck.likes).toBeDefined();
     expect(blogToCheck.likes).toBe(0);
   });
-  test("if there is no title, it respond with code 400: Bad Request", async() => {
-    await api.post("/api/blogs").send(newBlogWithNoTitle).expect(400);
-  })
+  test("if there is no title, it respond with code 400: Bad Request", async () => {
+    await api
+      .post("/api/blogs")
+      .send(newBlogWithNoTitle)
+      .expect(400);
+  });
 });
 
-describe('deletion of a note', () => {
-  test('succeeds with status code 204 if id is valid', async () => {
-    const responseBefore = await api.get('/api/blogs')
-    const blogToDelete = responseBefore.body[0]
-    console.log('blog', blogToDelete)
-    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+describe("deletion of a note", () => {
+  test("succeeds with status code 204 if id is valid", async () => {
+    const responseBefore = await api.get("/api/blogs");
+    const blogToDelete = responseBefore.body[0];
+
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
 
     const responseAfter = await api.get("/api/blogs");
-    expect(responseAfter.body.length).toBe(initialBlogs.length - 1)
+    expect(responseAfter.body.length).toBe(initialBlogs.length - 1);
     const titles = responseAfter.body.map(blog => blog.title);
-    expect(titles).not.toContain(blogToDelete.title)
-  })
-})
+    expect(titles).not.toContain(blogToDelete.title);
+  });
+});
 
+describe("update likes of a note", () => {
+  test("succeeds with status code 201 if id is valid", async () => {
+    const responseBefore = await api.get("/api/blogs");
+    const blogToUpdate = responseBefore.body[0];
 
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send({ likes: 20 })
+      .expect(201);
+
+    const responseAfter = await api.get("/api/blogs");
+    expect(responseAfter.body[0].likes).toBe(20);
+  });
+});
 
 afterAll(() => {
   mongoose.connection.close();

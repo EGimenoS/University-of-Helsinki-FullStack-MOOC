@@ -24,17 +24,30 @@ blogsRouter.post("/", async (request, response) => {
   } catch (exception) {
     if (exception.name === "ValidationError") {
       response.status(400).json(exception);
-    } else { response.status(500).json(exception);}
+    } else {
+      response.status(500).json(exception);
+    }
   }
 });
 
 blogsRouter.delete("/:id", async (request, response) => {
   try {
-    await Blog.findByIdAndRemove(request.params.id)
+    await Blog.findByIdAndRemove(request.params.id);
     response.status(204).end();
   } catch (exception) {
     response.status(400).json(exception);
   }
-})
+});
+
+blogsRouter.put("/:id", async (request, response) => {
+  try {
+    const blog = await Blog.findById(request.params.id);
+    blog.likes = request.body.likes;
+    const result = await blog.save();
+    response.status(201).json(result);
+  } catch (exception) {
+    response.status(400).json(exception);
+  }
+});
 
 module.exports = blogsRouter;
