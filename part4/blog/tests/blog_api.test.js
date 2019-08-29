@@ -26,6 +26,12 @@ describe("the response is correct when hitting GET /blogs", () => {
     const response = await api.get("/api/blogs")
     expect(response.body.length).toBe(initialBlogs.length);
   })
+
+  test("id property is correctly named as id, not _id", async () => {
+    const response = await api.get("/api/blogs")
+    console.log(response.body[0].id)
+    expect(response.body[0].id).toBeDefined()
+  })
 });
 
 afterAll(() => {
