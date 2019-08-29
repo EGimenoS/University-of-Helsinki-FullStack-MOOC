@@ -13,13 +13,19 @@ blogsRouter.get("/", async (request, response) => {
 });
 
 blogsRouter.post("/", async (request, response) => {
-  if (typeof request.body.likes === 'undefined') {
+  if (typeof request.body.likes === "undefined") {
     request.body.likes = 0;
   }
-  const blog = new Blog(request.body);
 
-  const result = await blog.save();
-  response.status(201).json(result);
+  const blog = new Blog(request.body);
+  try {
+    const result = await blog.save();
+    response.status(201).json(result);
+  } catch (exception) {
+    if (exception.name === "ValidationError") {
+      response.status(400).json(exception);
+    } else { response.status(500).json(exception);}
+  }
 });
 
 module.exports = blogsRouter;

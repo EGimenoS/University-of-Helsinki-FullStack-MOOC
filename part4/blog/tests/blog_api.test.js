@@ -29,7 +29,6 @@ describe("the response is correct when hitting GET /blogs", () => {
 
   test("id property is correctly named as id, not _id", async () => {
     const response = await api.get("/api/blogs");
-    console.log(response.body[0].id);
     expect(response.body[0].id).toBeDefined();
   });
 });
@@ -46,6 +45,11 @@ describe("new Blogs can be added correctly", () => {
     author: "Vasco",
     url: "blog.angularuniversity.io"
   };
+   const newBlogWithNoTitle = {
+     title: "",
+     author: "Vasco",
+     url: "blog.angularuniversity.io"
+   };
   test("when addding a blog, the blog count increases", async () => {
     await api.post("/api/blogs").send(newBlog);
 
@@ -70,6 +74,9 @@ describe("new Blogs can be added correctly", () => {
     expect(blogToCheck.likes).toBeDefined();
     expect(blogToCheck.likes).toBe(0);
   });
+  test("if there is no title, it respond with code 400: Bad Request", async() => {
+    await api.post("/api/blogs").send(newBlogWithNoTitle).expect(400);
+  })
 });
 
 afterAll(() => {

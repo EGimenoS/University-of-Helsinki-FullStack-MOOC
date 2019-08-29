@@ -1,7 +1,7 @@
 POST http://localhost:3003/api/blogs
 content-type: application/json
 
-{ "title": "Angular University",
+{ "title": "",
   "author": "Vasco",
   "url": "https://blog.angular-university.io"
 }
