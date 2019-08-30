@@ -19,12 +19,14 @@ usersRouter.post("/", async (request, response) => {
 
     response.json(savedUser);
   } catch (exception) {
-    response.json(exception);
+    if ((exception.name = "ValidationError")) {
+      response.status(400).json(exception);
+    } else response.status(500).json(exception);
   }
 });
 
 usersRouter.get("/", async (request, response) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("blogs");
   response.json(users.map(u => u.toJSON()));
 });
 

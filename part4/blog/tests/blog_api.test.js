@@ -38,17 +38,20 @@ describe("new Blogs can be added correctly", () => {
     title: "Angular University",
     author: "Vasco",
     url: "blog.angularuniversity.io",
-    likes: 0
+    likes: 0,
+    userId: "5d67d401c857dc2e0082d87d"
   };
   const newBlogWithNoLikes = {
     title: "Angular University",
     author: "Vasco",
-    url: "blog.angularuniversity.io"
+    url: "blog.angularuniversity.io",
+    userId: "5d67d401c857dc2e0082d87d"
   };
   const newBlogWithNoTitle = {
     title: "",
     author: "Vasco",
-    url: "blog.angularuniversity.io"
+    url: "blog.angularuniversity.io",
+    userId: "5d67d401c857dc2e0082d87d"
   };
   test("when addding a blog, the blog count increases", async () => {
     await api.post("/api/blogs").send(newBlog);
