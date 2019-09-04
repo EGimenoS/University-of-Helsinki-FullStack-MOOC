@@ -1,5 +1,6 @@
 import Login from "./components/Login";
 import Blogs from "./components/Blogs";
+import Notification from "./components/Notification"
 import BlogForm from "./components/BlogForm";
 import blogsService from "./services/blogs";
 import loginService from "./services/login";
@@ -10,7 +11,7 @@ const App = () => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [notificationMessage, setNotificationMessage] = useState(null);
   const [blogTitle, setBlogTitle] = useState(null);
   const [blogAuthor, setBlogAuthor] = useState(null);
   const [blogUrl, setBlogUrl] = useState(null);
@@ -18,7 +19,7 @@ const App = () => {
   useEffect(() => {
     const userStored = window.localStorage.getItem("user");
     if (userStored) {
-      const user = JSON.parse(userStored)
+      const user = JSON.parse(userStored);
       setUser(user);
       blogsService.setToken(user.token);
     }
@@ -31,7 +32,7 @@ const App = () => {
     });
   }, []);
 
-  const handleBlogForm = event => {
+  const handleBlogForm = async event => {
     event.preventDefault();
 
     const newBlog = {
@@ -40,12 +41,16 @@ const App = () => {
       url: blogUrl
     };
     try {
-      const createdBlog = blogsService.create(newBlog);
-      setBlogs(blogs.concat(createdBlog))
-    } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      const createdBlog = await blogsService.create(newBlog);
+      setBlogs(blogs.concat(createdBlog));
+      setNotificationMessage("BlogCreated");
       setTimeout(() => {
-        setErrorMessage(null);
+        setNotificationMessage(null);
+      }, 5000);
+    } catch (exception) {
+      setNotificationMessage("Error creating");
+      setTimeout(() => {
+        setNotificationMessage(null);
       }, 5000);
     }
   };
@@ -81,13 +86,13 @@ const App = () => {
       window.localStorage.setItem("user", JSON.stringify(user));
 
       setUser(user);
-      blogsService.setToken(user.token)
+      blogsService.setToken(user.token);
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      setNotificationMessage("Wrong credentials");
       setTimeout(() => {
-        setErrorMessage(null);
+        setNotificationMessage(null);
       }, 5000);
     }
   };
@@ -125,7 +130,12 @@ const App = () => {
     );
   };
 
-  return <div>{user === null ? renderLogin() : renderBlogs()}</div>;
+  return (
+    <div>
+      <Notification message={notificationMessage} />
+      {user === null ? renderLogin() : renderBlogs()}
+    </div>
+  );
 };
 
 export default App;
